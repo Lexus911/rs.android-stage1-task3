@@ -1,28 +1,32 @@
 package subtask3
+import kotlin.math.absoluteValue
 
 class ArrayCalculator {
+
     fun maxProductOf(numberOfItems: Int, itemsFromArray: Array<Any>): Int {
-        var arr = emptyArray<Int>()
-        for(i in itemsFromArray.indices)
-            if(itemsFromArray[i] is Int){
-                arr += itemsFromArray[i] as Int
+        val sorted = itemsFromArray.filterIsInstance<Int>().sortedBy { it.absoluteValue }.reversed()
+
+        if(sorted.isNotEmpty()){
+            var resultOne = 1
+
+            if(sorted.size <= numberOfItems) {
+                for (i in sorted)
+                    resultOne *= i
+                return resultOne
             }
-
-        arr.sortDescending()
-
-        val c: Int
-        if(numberOfItems <= arr.size)
-            c = numberOfItems - 1
-            else
-            c = arr.size-1
-
-        var prod = 1
-        for(i in 0..c) {
-            prod *= arr[c - i]
+            for (i in 0 until numberOfItems){
+                resultOne *= sorted[i]
+            }
+            val onlyPositive = sorted.filter { i -> i>= 0 }
+            var resultTwo= 1
+            for (i in 0 until numberOfItems){
+                resultTwo*= onlyPositive[i]
+            }
+            return if (resultTwo>= resultOne){
+                resultTwo
+            }
+            else resultOne
         }
-
-        if(arr.isEmpty())
-            return 0
-        return prod
+        return 0
     }
 }
