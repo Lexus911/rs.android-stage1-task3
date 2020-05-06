@@ -7,7 +7,7 @@ class TelephoneFinder {
     fun findAllNumbersFromGivenNumber(number: String): Array<String>? {
 
         var result = emptyArray<String>()
-        for(i in 0 until number.length-1) {
+        for(i in 0..number.length-1) {
             if (number[i] == '1') {
                 result += number.replaceRange(i, i + 1, "2")
                 result += number.replaceRange(i, i + 1, "4")
